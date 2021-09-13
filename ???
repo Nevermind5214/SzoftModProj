@@ -1,0 +1,16 @@
+Szoftverfejlesztési Módszertanok 1. Projekt
+
+Specifikáció: számológép
+Követelmény:
+-c++ nyelven íródik
+-gui (visual studio)
+-átlag számológép
+-alapműveletek
+-zárójelezés
+-törlés
+-változók
+-négyzet, gyökvonás
+-sin, cos
+
+Funkcionális:
+
