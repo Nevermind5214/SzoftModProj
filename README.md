@@ -1,0 +1,2 @@
+# SzoftModProj
+Szoftverfejlesztési Módszertanok
