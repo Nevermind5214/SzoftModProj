@@ -4,4 +4,4 @@
 - Sipos Edit Adrienn
 - Mikáczó Dávid
 
-A fejlesztés Microsoft Visual Stuido-val történik
+A fejlesztés Microsoft Visual Stuido-val történik C++ nyelven
