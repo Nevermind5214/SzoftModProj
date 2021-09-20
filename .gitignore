@@ -1,0 +1,13 @@
+*
+!*.cpp
+!*.md
+!*.sln
+!*.c
+!*.h
+!*.vcproj
+!*.vcproj.filters
+!*.vcproj.user
+!*.resx
+!*.rc
+!*.ico
+!*/
