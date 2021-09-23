@@ -1,4 +1,11 @@
 #pragma once
+#include <iostream>
+#include <string>
+#include <vector>
+
+
+double calculate(std::vector<char> inputCharVect);
+static std::string toStandardString(System::String^ string);
 
 namespace CppCLRWinformsProjekt {
 
@@ -34,7 +41,9 @@ namespace CppCLRWinformsProjekt {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ buttonEquals;
+	protected:
+
 	private: System::Windows::Forms::TextBox^ textBox1;
 	protected:
 
@@ -51,19 +60,19 @@ namespace CppCLRWinformsProjekt {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->buttonEquals = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
-			// button1
+			// buttonEquals
 			// 
-			this->button1->Location = System::Drawing::Point(69, 158);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 0;
-			this->button1->Text = L"button1";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
+			this->buttonEquals->Location = System::Drawing::Point(69, 158);
+			this->buttonEquals->Name = L"buttonEquals";
+			this->buttonEquals->Size = System::Drawing::Size(75, 23);
+			this->buttonEquals->TabIndex = 0;
+			this->buttonEquals->Text = L"=";
+			this->buttonEquals->UseVisualStyleBackColor = true;
+			this->buttonEquals->Click += gcnew System::EventHandler(this, &Form1::buttonEquals_Click);
 			// 
 			// textBox1
 			// 
@@ -78,7 +87,7 @@ namespace CppCLRWinformsProjekt {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(284, 261);
 			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->buttonEquals);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->ResumeLayout(false);
@@ -86,8 +95,12 @@ namespace CppCLRWinformsProjekt {
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->textBox1->Text = "Hali";
+	private: System::Void buttonEquals_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		std::string mystrung = toStandardString(this->textBox1->Text);
+		std::vector<char> data(mystrung.begin(), mystrung.end());
+		this->textBox1->Text = calculate(data).ToString();
+
 	}
 	};
 }

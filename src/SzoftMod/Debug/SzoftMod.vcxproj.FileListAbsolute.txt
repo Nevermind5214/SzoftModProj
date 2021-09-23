@@ -1,3 +1,6 @@
 D:\IK\3\szoftmod\prog\SzoftMod\SzoftMod\Debug\SzoftMod.vcxproj.AssemblyReference.cache
 D:\IK\3\szoftmod\prog\SzoftMod\SzoftMod\Debug\SzoftMod.Form1.resources
 D:\IK\3\szoftmod\prog\SzoftMod\SzoftMod\Debug\SzoftMod.vcxproj.GenerateResource.cache
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\Debug\SzoftMod.vcxproj.AssemblyReference.cache
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\Debug\SzoftMod.Form1.resources
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\Debug\SzoftMod.vcxproj.GenerateResource.cache

@@ -1,3 +1,8 @@
 ﻿  CppCLR_WinformsProjekt.cpp
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\CppCLR_WinformsProjekt.cpp(11,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\CppCLR_WinformsProjekt.cpp(12,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(7,20): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(17,20): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(30,34): warning C4018: '<': signed/unsigned mismatch
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  SzoftMod.vcxproj -> D:\IK\3\szoftmod\prog\SzoftMod\Debug\SzoftMod.exe
+  SzoftMod.vcxproj -> D:\IK\3\szoftmod\SzoftModProj\src\Debug\SzoftMod.exe
