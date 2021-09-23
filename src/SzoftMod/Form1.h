@@ -57,6 +57,8 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::Button^ button0;
 	private: System::Windows::Forms::Button^ buttonPlus;
 	private: System::Windows::Forms::Button^ buttonMinus;
+	private: System::Windows::Forms::Label^ labelRetVal;
+
 	protected:
 
 	private:
@@ -86,6 +88,7 @@ namespace CppCLRWinformsProjekt {
 			this->button0 = (gcnew System::Windows::Forms::Button());
 			this->buttonPlus = (gcnew System::Windows::Forms::Button());
 			this->buttonMinus = (gcnew System::Windows::Forms::Button());
+			this->labelRetVal = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// buttonEquals
@@ -226,11 +229,22 @@ namespace CppCLRWinformsProjekt {
 			this->buttonMinus->UseVisualStyleBackColor = true;
 			this->buttonMinus->Click += gcnew System::EventHandler(this, &Form1::buttonMinus_Click);
 			// 
+			// labelRetVal
+			// 
+			this->labelRetVal->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->labelRetVal->AutoSize = true;
+			this->labelRetVal->Location = System::Drawing::Point(12, 35);
+			this->labelRetVal->Name = L"labelRetVal";
+			this->labelRetVal->Size = System::Drawing::Size(0, 13);
+			this->labelRetVal->TabIndex = 14;
+			this->labelRetVal->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(284, 261);
+			this->Controls->Add(this->labelRetVal);
 			this->Controls->Add(this->buttonMinus);
 			this->Controls->Add(this->buttonPlus);
 			this->Controls->Add(this->button0);
@@ -256,7 +270,7 @@ namespace CppCLRWinformsProjekt {
 
 		std::string mystrung = toStandardString(this->textBox1->Text);
 		std::vector<char> data(mystrung.begin(), mystrung.end());
-		this->textBox1->Text = calculate(data).ToString();
+		this->labelRetVal->Text = calculate(data).ToString();
 
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
