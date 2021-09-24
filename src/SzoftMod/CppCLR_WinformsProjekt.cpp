@@ -11,14 +11,22 @@ using namespace System;
 #include "Form1.h";
 #include "calcmodule.h";
 
-static std::string toStandardString(System::String^ string)
+static std::string toStandardString(System::String^ myString)
 {
-	System::IntPtr pointer = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(string);
+	System::IntPtr pointer = System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(myString);
 	char* charPointer = reinterpret_cast<char*>(pointer.ToPointer());
-	std::string returnString(charPointer, string->Length);
+	std::string returnString(charPointer, myString->Length);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal(pointer);
 	return returnString;
 }
+
+
+static String^ toSystemString(std::string myString)
+{
+	String^ returnString = gcnew String(myString.c_str());
+	return returnString;
+}
+
 
 using namespace System::Windows::Forms;
 

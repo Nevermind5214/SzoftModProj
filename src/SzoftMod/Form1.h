@@ -6,6 +6,7 @@
 
 double calculate(std::vector<char> inputCharVect);
 static std::string toStandardString(System::String^ string);
+static String^ toSystemString(std::string myString);
 
 namespace CppCLRWinformsProjekt {
 
@@ -270,8 +271,20 @@ namespace CppCLRWinformsProjekt {
 
 		std::string mystrung = toStandardString(this->textBox1->Text);
 		std::vector<char> data(mystrung.begin(), mystrung.end());
-		this->labelRetVal->Text = calculate(data).ToString();
 
+		try {
+			this->labelRetVal->ForeColor = System::Drawing::Color::Black;
+			this->labelRetVal->Text = calculate(data).ToString();
+		}
+		catch (char const* errorText) {
+			this->labelRetVal->ForeColor = System::Drawing::Color::Red;
+			this->labelRetVal->Text = toSystemString(errorText);
+		}
+		catch (...) {
+			this->labelRetVal->ForeColor = System::Drawing::Color::Red;
+			this->labelRetVal->Text = "Valami hiba van báttya";
+		}
+		
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->textBox1->Text = this->textBox1->Text + "1";
