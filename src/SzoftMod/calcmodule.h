@@ -1,9 +1,12 @@
 #pragma once
 static std::string toStandardString(System::String^ myString);
 
-bool allowedChar(char myChar) {
+
+std::vector<char> whitelist = { '0','1','2','3','4','5','6','7','8','9','+','-','*','/','(',')','.' };
+std::vector<std::string> fuggvenyWhitelist = { "sin", "cos", "tan", "ctg" };
+
+bool allowedChar(char myChar) {//DONE
 	bool allowed = false;
-	std::vector<char> whitelist = { '0','1','2','3','4','5','6','7','8','9','+','-','*','/','(',')','.' };
 	for (int i = 0; i < whitelist.size(); i++)
 	{
 		if (myChar == whitelist[i]) allowed = true;
@@ -11,19 +14,42 @@ bool allowedChar(char myChar) {
 	return allowed;
 }
 
+
 std::vector<char> sanitazeInput(std::vector<char> inputCharVect) {
 	std::vector<char> tempCharVect;
 	//remove shit
-	for (int i = 0; i < inputCharVect.size(); i++)
+	for (int karakterPozicio = 0; karakterPozicio < inputCharVect.size(); karakterPozicio++)
 	{
-		if (allowedChar(inputCharVect[i])) {
-			tempCharVect.push_back(inputCharVect[i]);
+		if (allowedChar(inputCharVect[karakterPozicio])) {
+			tempCharVect.push_back(inputCharVect[karakterPozicio]);
 		}
+
+		//ittt van valami hiba fos idk, nem nagyon jó a mintakeresésem
+		else
+		{
+			bool talatFuggvenyt = false;
+			for (int talatFuggvenyIndex = 0; talatFuggvenyIndex < fuggvenyWhitelist.size() && !talatFuggvenyt; talatFuggvenyIndex++)
+			{
+				for (int fuggvenyKarakterIndex = 0; fuggvenyKarakterIndex < fuggvenyWhitelist[talatFuggvenyIndex].size(); fuggvenyKarakterIndex++)
+				{
+					if(karakterPozicio + fuggvenyKarakterIndex > inputCharVect.size()) throw("túllóg");
+
+					if (fuggvenyWhitelist[talatFuggvenyIndex][fuggvenyKarakterIndex] == inputCharVect[karakterPozicio + fuggvenyKarakterIndex]) {
+						talatFuggvenyt = true;
+						tempCharVect.push_back(inputCharVect[karakterPozicio + fuggvenyKarakterIndex]);
+					}
+				}
+				if (!talatFuggvenyt) throw("ismeretlen füghjgggvény");
+			}
+
+			if (!talatFuggvenyt) throw("ismeretlen füGGvény");
+		}
+
 	}
 	return tempCharVect;
 }
 
-bool zarojelekJokE(std::vector<char> inputCharVect) {
+bool zarojelekJokE(std::vector<char> inputCharVect) {//DONE
 	int nyitott = 0;
 	for (int i = 0; i < inputCharVect.size(); i++)
 	{
@@ -35,7 +61,16 @@ bool zarojelekJokE(std::vector<char> inputCharVect) {
 	else return false;
 }
 
-bool vanBenneNyitoZarojel(std::vector<char> inputCharVect) {
+bool vanBenneFuggveny(std::vector<char> inputCharVect) {//DONE
+	bool van = false;
+	for (int i = 0; i < inputCharVect.size(); i++)
+	{
+		if (!allowedChar(inputCharVect[i])) van = true;
+	}
+	return van;
+}
+
+bool vanBenneNyitoZarojel(std::vector<char> inputCharVect) {//DONE
 	bool van = false;
 	for (int i = 0; i < inputCharVect.size(); i++)
 	{
@@ -44,7 +79,7 @@ bool vanBenneNyitoZarojel(std::vector<char> inputCharVect) {
 	return van;
 }
 
-bool vanBenneSzorzasOsztas(std::vector<char> inputCharVect) {
+bool vanBenneSzorzasOsztas(std::vector<char> inputCharVect) {//DONE
 	bool van = false;
 	for (int i = 0; i < inputCharVect.size(); i++)
 	{
@@ -53,7 +88,7 @@ bool vanBenneSzorzasOsztas(std::vector<char> inputCharVect) {
 	return van;
 }
 
-bool vanBenneOsszeadasKivonas(std::vector<char> inputCharVect) {
+bool vanBenneOsszeadasKivonas(std::vector<char> inputCharVect) {//DONE
 	bool van = false;
 	for (int i = 0; i < inputCharVect.size(); i++)
 	{
@@ -68,7 +103,14 @@ double calculate(std::vector<char> inputCharVect) {
 	double eredmeny = 0;
 
 	if (zarojelekJokE(inputCharVect)) {
-		while (vanBenneNyitoZarojel(inputCharVect))
+
+		while (vanBenneFuggveny(inputCharVect)) {
+			break; //debug
+
+			//egyesével math.függvény(caluculate(a bleseje))  erase insert-el
+		}
+
+		while (vanBenneNyitoZarojel(inputCharVect))//DONE
 		{
 			bool kellEMegSzamolni = true;
 			for (int nyitoIndex = 0; nyitoIndex < inputCharVect.size() && kellEMegSzamolni; nyitoIndex++)
@@ -100,6 +142,9 @@ double calculate(std::vector<char> inputCharVect) {
 
 		while (vanBenneSzorzasOsztas(inputCharVect))
 		{
+
+			// "balszám*jobbszám" cuccot felülírni az eredményével erase insert-el
+			break; //debug
 			bool kellEMegSzamolni = true;
 			for (int szorzasHelye = 0; szorzasHelye < inputCharVect.size() && kellEMegSzamolni; szorzasHelye++)
 			{
@@ -130,6 +175,8 @@ double calculate(std::vector<char> inputCharVect) {
 		while (vanBenneOsszeadasKivonas(inputCharVect))
 		{
 
+			// "balszám+jobbszám" cuccot felülírni az eredményével  erase insert-el
+			break; //debug
 		}
 
 		for (int i = 0; i < inputCharVect.size(); i++)
