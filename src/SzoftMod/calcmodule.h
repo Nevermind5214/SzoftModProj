@@ -44,7 +44,7 @@ bool zarojelekJokE(std::vector<Token> inputTokenVect) {//DONE
 	else return false;
 }
 
-std::vector<Token> tokenise(std::vector<char> inputCharVect) {
+std::vector<Token> tokenise(std::vector<char> inputCharVect) { //DONE
 	std::vector<Token> tokenisedInput;
 	double retval = 0;
 	int dotCounter = 1;
@@ -52,7 +52,7 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) {
 
 	for (int i = 0; i < inputCharVect.size(); i++)//végignézzük a tömböt karakterenként
 	{
-		if (!isdigit(inputCharVect[i]) && (i - 1) >= 0 && isdigit(inputCharVect[i - 1]))//elértük a szám végét, ez már nem számjegy de még az elõzõ létezik és az volt
+		if (inputCharVect[i]!= '.' && !isdigit(inputCharVect[i]) && (i - 1) >= 0 && isdigit(inputCharVect[i - 1]))//elértük a szám végét, ez már nem számjegy de még az elõzõ létezik és az volt
 		{
 			tokenisedInput.push_back(Token('n', retval)); //szám vége, reseteljük a segédváltozókat és beletesszük
 			retval = 0;
@@ -66,7 +66,7 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) {
 			if (inputCharVect[i] == '.')
 			{
 				beforeDot = false;
-				if (!isdigit(inputCharVect[i + 1])) throw("A pont után számjegynek kell állnia!");
+				if ((i == inputCharVect.size() - 1) || !isdigit(inputCharVect[i + 1])) throw("A pont után számjegynek kell állnia!");
 			}
 			else
 			{
@@ -88,7 +88,7 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) {
 			bool megvan = false;
 			for (int fuggvenyekIndex = 0; fuggvenyekIndex < fuggvenyWhitelist.size() && !megvan; fuggvenyekIndex++) //megnézünk minden fv-t
 			{
-				bool mindjo = true;
+				bool mindjo = true;//eddig minden karakter egyezik-e
 				std::string currentFuggvenynev = "";
 				for (int fuggKarIndex = 0; fuggKarIndex < fuggvenyWhitelist[fuggvenyekIndex].size() && (i + fuggKarIndex) < inputCharVect.size(); fuggKarIndex++) //karakterenként
 				{
@@ -97,10 +97,7 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) {
 					}
 					else mindjo = false;
 					if (fuggvenyWhitelist[fuggvenyekIndex].size() == currentFuggvenynev.size() && mindjo) {
-						for (int i = 0; i < currentFuggvenynev.size(); i++)
-						{
-							tokenisedInput.push_back(Token('f', currentFuggvenynev));
-						}
+						tokenisedInput.push_back(Token('f', currentFuggvenynev));
 						i = i + currentFuggvenynev.size() - 1;
 						megvan = true;
 					}
@@ -109,11 +106,13 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) {
 			if (!megvan)
 			{
 				std::string dotnetegyfos(1, inputCharVect[i]);
-				throw("ismeretlen karakter: '" + toSystemString(dotnetegyfos) + "'");
+				throw("Ismeretlen karakter: '" + toSystemString(dotnetegyfos) + "'");
 			}
 		}
-	}
 
+		//elértünk a karakterek végére és az utsó jegy szám volt akkor bele kell tenni mert már nem lesz több a for-ban
+		if ((i == inputCharVect.size() - 1) && (isdigit(inputCharVect[i]))) tokenisedInput.push_back(Token('n', retval));
+	}
 
 	return tokenisedInput;
 }
@@ -260,7 +259,9 @@ double calculate(std::vector<char> inputCharVect) {
 		}
 
 		*/
-	return 1337;
+	if (tokenisedInput.size() > 0 && tokenisedInput[0].kind == 'n') return tokenisedInput[0].value;
+	if (tokenisedInput.size() > 0 && tokenisedInput[0].kind == 'f') throw(tokenisedInput[0].name);
+	else return 0;
 	//}
 	//else throw("nemjók a zárójelek báttya");
 }

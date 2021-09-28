@@ -273,7 +273,6 @@ namespace CppCLRWinformsProjekt {
 			// 
 			// labelRetVal
 			// 
-			this->labelRetVal->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->labelRetVal->AutoSize = true;
 			this->labelRetVal->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
@@ -448,6 +447,8 @@ namespace CppCLRWinformsProjekt {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->buttonEquals);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->MaximizeBox = false;
 			this->Name = L"Form1";
 			this->Text = L"Calculator";
 			this->ResumeLayout(false);
@@ -477,9 +478,17 @@ namespace CppCLRWinformsProjekt {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
 				this->labelRetVal->Text = errString;
 			}
+			catch (std::string errString) {
+				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
+				this->labelRetVal->Text = toSystemString(errString);
+			}
 			catch (double value) {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
 				this->labelRetVal->Text = toSystemString(std::to_string(value));
+			}
+			catch (Exception^ myException) {
+				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
+				this->labelRetVal->Text = myException->ToString();
 			}
 			catch (...) {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;

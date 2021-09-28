@@ -5,6 +5,5 @@ D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(53,20): warning C4018: '
 D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(89,50): warning C4018: '<': signed/unsigned mismatch
 D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(93,45): warning C4018: '<': signed/unsigned mismatch
 D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(93,111): warning C4018: '<': signed/unsigned mismatch
-D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(100,25): warning C4018: '<': signed/unsigned mismatch
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   SzoftMod.vcxproj -> D:\IK\3\szoftmod\SzoftModProj\src\Debug\SzoftMod.exe
