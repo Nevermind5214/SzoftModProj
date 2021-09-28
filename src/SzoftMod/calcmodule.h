@@ -1,143 +1,127 @@
 #pragma once
 #include <math.h>
 static std::string toStandardString(System::String^ myString);
+static String^ toSystemString(std::string myString);
 
+std::vector<char> muveletiJelek = { '+','-','*','/','(',')','.','^' };
+std::vector<std::string> fuggvenyWhitelist = { "sqrt", "sin", "cos", "tan" };
 
-std::vector<char> whitelist = { '0','1','2','3','4','5','6','7','8','9','+','-','*','/','(',')','.','^' };
-std::vector<std::string> fuggvenyWhitelist = { "sqrt", "sin", "cos", "tan"};
+class Token {
+public:
+	char kind; // fvnév: f, mûveleti jel, zárójel: önmaga, szám: n
+	double value; //számhoz
+	std::string name; //függvénynévhez
+	//Token() : kind(0) {}
 
-bool allowedChar(char myChar) {//DONE
-	bool allowed = false;
-	for (int i = 0; i < whitelist.size(); i++)
+	Token(char ch, double val) : kind(ch), value(val) {}//számhoz
+	Token(char ch) : kind(ch) {}//mûveleti jelhez, zárójelhez
+	Token(char ch, std::string n) : kind(ch), name(n) {}//függvénynévhez
+};
+
+bool benneVanE(std::vector<char>charVect, char myChar)//megnézi hogy az adott karakter benne van-e az adott tömbben
+{
+	for (char currentChar : charVect)
 	{
-		if (myChar == whitelist[i]) allowed = true;
+		if (myChar == currentChar) return true;
 	}
-	return allowed;
+	return false;
 }
 
-
-std::vector<char> sanitazeInput(std::vector<char> inputCharVect) { //DONE
-	std::vector<char> tempCharVect;
-	//remove shit
-	for (int karakterPozicio = 0; karakterPozicio < inputCharVect.size(); karakterPozicio++)
-	{
-		if (allowedChar(inputCharVect[karakterPozicio])) {
-			tempCharVect.push_back(inputCharVect[karakterPozicio]);
-		}
-
-		else
-		{
-			bool megvan = false;
-			for (int fuggvenyekIndex = 0; fuggvenyekIndex < fuggvenyWhitelist.size() && !megvan; fuggvenyekIndex++) //megnézünk minden fv-t
-			{
-				bool mindjo = true;
-				std::vector<char> tempCharVectFunct;
-				for (int fuggKarIndex = 0; fuggKarIndex < fuggvenyWhitelist[fuggvenyekIndex].size() && (karakterPozicio + fuggKarIndex) < inputCharVect.size(); fuggKarIndex++) //karakterenként
-				{
-					if (inputCharVect[karakterPozicio + fuggKarIndex] == fuggvenyWhitelist[fuggvenyekIndex][fuggKarIndex]) {
-						tempCharVectFunct.push_back(inputCharVect[karakterPozicio + fuggKarIndex]);
-					}
-					else mindjo = false;
-					if (fuggvenyWhitelist[fuggvenyekIndex].size() == tempCharVectFunct.size() && mindjo) {
-						for (int i = 0; i < tempCharVectFunct.size(); i++)
-						{
-							tempCharVect.push_back(tempCharVectFunct[i]);
-						}
-						karakterPozicio = karakterPozicio + tempCharVectFunct.size() - 1;
-						megvan = true;
-					}
-				}
-			}
-			if (!megvan) throw("nem találtam ilyen fvt"); // ha nem volt közte
-		}
-
-	}
-	return tempCharVect;
+bool allowedChar(char myChar)//ha számjegy vagy mûveleti jel az adott karakter akkor megengedett
+{
+	return (isdigit(myChar) || benneVanE(muveletiJelek, myChar));
 }
 
-bool zarojelekJokE(std::vector<char> inputCharVect) {//DONE
+bool zarojelekJokE(std::vector<Token> inputTokenVect) {//DONE
 	int nyitott = 0;
-	for (int i = 0; i < inputCharVect.size(); i++)
+	for (Token currentToken : inputTokenVect)
 	{
-		if (inputCharVect[i] == '(') nyitott++;
-		if (inputCharVect[i] == ')') nyitott--;
+		if (currentToken.kind == '(') nyitott++;
+		if (currentToken.kind == ')') nyitott--;
 		if (nyitott < 0) return false;
 	}
 	if (nyitott == 0) return true;
 	else return false;
 }
 
-bool vanBenneFuggveny(std::vector<char> inputCharVect) {//DONE
-	bool van = false;
-	for (int i = 0; i < inputCharVect.size(); i++)
-	{
-		if (!allowedChar(inputCharVect[i])) van = true;
-	}
-	return van;
-}
-
-bool vanBenneNyitoZarojel(std::vector<char> inputCharVect) {//DONE
-	bool van = false;
-	for (int i = 0; i < inputCharVect.size(); i++)
-	{
-		if (inputCharVect[i] == '(') van = true;
-	}
-	return van;
-}
-
-bool vanBenneSzorzasOsztas(std::vector<char> inputCharVect) {//DONE
-	bool van = false;
-	for (int i = 0; i < inputCharVect.size(); i++)
-	{
-		if (inputCharVect[i] == '*' || inputCharVect[i] == '/') van = true;
-	}
-	return van;
-}
-
-bool vanBenneOsszeadasKivonas(std::vector<char> inputCharVect) {//DONE
-	bool van = false;
-	for (int i = 0; i < inputCharVect.size(); i++)
-	{
-		if (inputCharVect[i] == '+' || inputCharVect[i] == '-') van = true;
-	}
-	return van;
-}
-
-bool vanBenneHatvanyozas(std::vector<char> inputCharVect) {//DONE
-	bool van = false;
-	for (int i = 0; i < inputCharVect.size(); i++)
-	{
-		if (inputCharVect[i] == '^') van = true;
-	}
-	return van;
-}
-
-double toDouble(std::vector<char> inputCharVect) { //DONE
+std::vector<Token> tokenise(std::vector<char> inputCharVect) {
+	std::vector<Token> tokenisedInput;
 	double retval = 0;
 	int dotCounter = 1;
 	bool beforeDot = true;
-	for (int i = 0; i < inputCharVect.size(); i++)
+
+	for (int i = 0; i < inputCharVect.size(); i++)//végignézzük a tömböt karakterenként
 	{
-		if (isdigit(inputCharVect[i]) || inputCharVect[i] == '.') {
-			if (inputCharVect[i] == '.') beforeDot = false;
-			else {
-				if (beforeDot) retval = retval * 10.0 + (inputCharVect[i]-48); //csúnya ascii hack, nem volt jó sehogy sem, így most mûxik
-				else {
-					retval = retval + (inputCharVect[i] - 48) * pow(0.1, dotCounter);
+		if (!isdigit(inputCharVect[i]) && (i - 1) >= 0 && isdigit(inputCharVect[i - 1]))//elértük a szám végét, ez már nem számjegy de még az elõzõ létezik és az volt
+		{
+			tokenisedInput.push_back(Token('n', retval)); //szám vége, reseteljük a segédváltozókat és beletesszük
+			retval = 0;
+			dotCounter = 1;
+			beforeDot = true;
+		}
+
+		//ha számjegy
+		if (isdigit(inputCharVect[i]) || inputCharVect[i] == '.')//számjegy vagy pont (a .012  stb. is elfogadott
+		{
+			if (inputCharVect[i] == '.')
+			{
+				beforeDot = false;
+				if (!isdigit(inputCharVect[i + 1])) throw("A pont után számjegynek kell állnia!");
+			}
+			else
+			{
+				if (beforeDot) retval = retval * 10.0 + (inputCharVect[i] - 48); //pont elõtt, csúnya ascii hack, nem volt jó sehogy sem, így most mûxik
+				else
+				{
+					retval = retval + (inputCharVect[i] - 48) * pow(0.1, dotCounter);//pont után
 					dotCounter++;
 				}
 			}
 		}
-		//else throw("double conversion error");
-		else throw(inputCharVect);
+
+		//ha mûveleti jel
+		else if (benneVanE(muveletiJelek, inputCharVect[i])) tokenisedInput.push_back(Token(inputCharVect[i]));
+
+		//ha bármi más, megnézzük, hogy függvény-e
+		else
+		{
+			bool megvan = false;
+			for (int fuggvenyekIndex = 0; fuggvenyekIndex < fuggvenyWhitelist.size() && !megvan; fuggvenyekIndex++) //megnézünk minden fv-t
+			{
+				bool mindjo = true;
+				std::string currentFuggvenynev = "";
+				for (int fuggKarIndex = 0; fuggKarIndex < fuggvenyWhitelist[fuggvenyekIndex].size() && (i + fuggKarIndex) < inputCharVect.size(); fuggKarIndex++) //karakterenként
+				{
+					if (inputCharVect[i + fuggKarIndex] == fuggvenyWhitelist[fuggvenyekIndex][fuggKarIndex]) {
+						currentFuggvenynev = currentFuggvenynev + inputCharVect[i + fuggKarIndex];
+					}
+					else mindjo = false;
+					if (fuggvenyWhitelist[fuggvenyekIndex].size() == currentFuggvenynev.size() && mindjo) {
+						for (int i = 0; i < currentFuggvenynev.size(); i++)
+						{
+							tokenisedInput.push_back(Token('f', currentFuggvenynev));
+						}
+						i = i + currentFuggvenynev.size() - 1;
+						megvan = true;
+					}
+				}
+			}
+			if (!megvan)
+			{
+				std::string dotnetegyfos(1, inputCharVect[i]);
+				throw("ismeretlen karakter: '" + toSystemString(dotnetegyfos) + "'");
+			}
+		}
 	}
-	return retval;
+
+
+	return tokenisedInput;
 }
 
 double calculate(std::vector<char> inputCharVect) {
+	std::vector<Token> tokenisedInput = tokenise(inputCharVect);
 
-	inputCharVect = sanitazeInput(inputCharVect);
-
+	/*
 	if (zarojelekJokE(inputCharVect)) {
 
 		while (vanBenneFuggveny(inputCharVect)) {//DONE
@@ -230,7 +214,7 @@ double calculate(std::vector<char> inputCharVect) {
 		}
 
 
-		
+
 		while (vanBenneHatvanyozas(inputCharVect))
 		{
 			break;
@@ -275,8 +259,8 @@ double calculate(std::vector<char> inputCharVect) {
 			break; //debug
 		}
 
-
-		return toDouble(inputCharVect);
-	}
-	else throw("nemjók a zárójelek báttya");
+		*/
+	return 1337;
+	//}
+	//else throw("nemjók a zárójelek báttya");
 }

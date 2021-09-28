@@ -473,6 +473,10 @@ namespace CppCLRWinformsProjekt {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
 				this->labelRetVal->Text = toSystemString(koztesString);
 			}
+			catch (System::String^ errString) {
+				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
+				this->labelRetVal->Text = errString;
+			}
 			catch (double value) {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
 				this->labelRetVal->Text = toSystemString(std::to_string(value));
