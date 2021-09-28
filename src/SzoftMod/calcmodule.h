@@ -2,8 +2,8 @@
 static std::string toStandardString(System::String^ myString);
 
 
-std::vector<char> whitelist = { '0','1','2','3','4','5','6','7','8','9','+','-','*','/','(',')','.' };
-std::vector<std::string> fuggvenyWhitelist = { "sin", "cos", "tan", "ctg" };
+std::vector<char> whitelist = { '0','1','2','3','4','5','6','7','8','9','+','-','*','/','(',')','.','^'};
+std::vector<std::string> fuggvenyWhitelist = { "sqrt", "sin", "cos", "tan", "ctg" };
 
 bool allowedChar(char myChar) {//DONE
 	bool allowed = false;
@@ -15,7 +15,7 @@ bool allowedChar(char myChar) {//DONE
 }
 
 
-std::vector<char> sanitazeInput(std::vector<char> inputCharVect) {
+std::vector<char> sanitazeInput(std::vector<char> inputCharVect) { //DONE
 	std::vector<char> tempCharVect;
 	//remove shit
 	for (int karakterPozicio = 0; karakterPozicio < inputCharVect.size(); karakterPozicio++)
@@ -24,25 +24,30 @@ std::vector<char> sanitazeInput(std::vector<char> inputCharVect) {
 			tempCharVect.push_back(inputCharVect[karakterPozicio]);
 		}
 
-		//ittt van valami hiba fos idk, nem nagyon jó a mintakeresésem
 		else
 		{
-			bool talatFuggvenyt = false;
-			for (int talatFuggvenyIndex = 0; talatFuggvenyIndex < fuggvenyWhitelist.size() && !talatFuggvenyt; talatFuggvenyIndex++)
+			bool megvan = false;
+			for (int fuggvenyekIndex = 0; fuggvenyekIndex < fuggvenyWhitelist.size() && !megvan; fuggvenyekIndex++) //megnézünk minden fv-t
 			{
-				for (int fuggvenyKarakterIndex = 0; fuggvenyKarakterIndex < fuggvenyWhitelist[talatFuggvenyIndex].size(); fuggvenyKarakterIndex++)
+				std::vector<char> tempCharVectFunct;
+				for (int fuggKarIndex = 0; fuggKarIndex < fuggvenyWhitelist[fuggvenyekIndex].size() && (karakterPozicio + fuggKarIndex) < inputCharVect.size(); fuggKarIndex++) //karakterenként
 				{
-					if(karakterPozicio + fuggvenyKarakterIndex > inputCharVect.size()) throw("túllóg");
-
-					if (fuggvenyWhitelist[talatFuggvenyIndex][fuggvenyKarakterIndex] == inputCharVect[karakterPozicio + fuggvenyKarakterIndex]) {
-						talatFuggvenyt = true;
-						tempCharVect.push_back(inputCharVect[karakterPozicio + fuggvenyKarakterIndex]);
+					bool mindjo = true;
+					if (inputCharVect[karakterPozicio + fuggKarIndex] == fuggvenyWhitelist[fuggvenyekIndex][fuggKarIndex]) {
+						tempCharVectFunct.push_back(inputCharVect[karakterPozicio + fuggKarIndex]);
+					}
+					else mindjo = false;
+					if (fuggvenyWhitelist[fuggvenyekIndex].size() == tempCharVectFunct.size() && mindjo) {
+						for (int i = 0; i < tempCharVectFunct.size(); i++)
+						{
+							tempCharVect.push_back(tempCharVectFunct[i]);
+						}
+						karakterPozicio = karakterPozicio + tempCharVectFunct.size()-1;
+						megvan = true;
 					}
 				}
-				if (!talatFuggvenyt) throw("ismeretlen füghjgggvény");
 			}
-
-			if (!talatFuggvenyt) throw("ismeretlen füGGvény");
+			if (!megvan) throw("nem találtam ilyen fvt"); // ha nem volt közte
 		}
 
 	}
