@@ -462,11 +462,20 @@ namespace CppCLRWinformsProjekt {
 
 			try {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Black;
-				this->labelRetVal->Text = calculate(data).ToString();
+				this->labelRetVal->Text = toSystemString((std::to_string(calculate(data))));
 			}
 			catch (char const* errorText) {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
 				this->labelRetVal->Text = toSystemString(errorText);
+			}
+			catch (std::vector<char> errorVect) {
+				std::string koztesString(errorVect.begin(), errorVect.end());
+				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
+				this->labelRetVal->Text = toSystemString(koztesString);
+			}
+			catch (double value) {
+				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
+				this->labelRetVal->Text = toSystemString(std::to_string(value));
 			}
 			catch (...) {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;
