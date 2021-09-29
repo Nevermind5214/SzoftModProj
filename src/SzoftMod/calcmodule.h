@@ -3,7 +3,7 @@
 static std::string toStandardString(System::String^ myString);
 static String^ toSystemString(std::string myString);
 
-std::vector<char> muveletiJelek = { '+','-','*','/','(',')','.','^' };
+std::vector<char> muveletiJelek = { '+','-','*','/','(',')','.','^','!'};
 std::vector<std::string> fuggvenyWhitelist = { "sqrt", "sin", "cos", "tan" };
 
 class Token {
@@ -116,6 +116,27 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) { //DONE
 		if ((i == inputCharVect.size() - 1) && (isdigit(inputCharVect[i]))) tokenisedInput.push_back(Token('n', retval));
 	}
 
+
+
+	//ide jön az hogy negatív számoknak a FIX
+	for (int tokenIndex = 0; tokenIndex < tokenisedInput.size(); tokenIndex++)
+	{
+		if (tokenisedInput[tokenIndex].kind == 'n' && tokenIndex > 0 && tokenisedInput[tokenIndex - 1].kind == '-') //ha szám és előtte - van
+		{
+			if (tokenIndex == 1)
+			{
+				double tempVal = 0.0 - tokenisedInput[tokenIndex].value;
+				tokenisedInput.erase(tokenisedInput.begin() + (tokenIndex - 1), tokenisedInput.begin() + (tokenIndex + 1));
+				tokenisedInput.insert(tokenisedInput.begin() + (tokenIndex - 1), Token('n', tempVal));
+			}
+			else if (tokenisedInput[tokenIndex - 2].kind != ')' && tokenisedInput[tokenIndex - 2].kind != 'n' && tokenisedInput[tokenIndex - 2].kind != '.')
+			{
+				double tempVal = 0.0 - tokenisedInput[tokenIndex].value;
+				tokenisedInput.erase(tokenisedInput.begin() + (tokenIndex - 1), tokenisedInput.begin() + (tokenIndex + 1));
+				tokenisedInput.insert(tokenisedInput.begin() + (tokenIndex - 1), Token('n', tempVal));
+			}
+		}
+	}
 	return tokenisedInput;
 }
 
@@ -129,6 +150,12 @@ void dumpKinds(std::vector<Token> tokenisedInput)
 	throw(errKinds);
 }
 
+double fact(double i)
+{
+	if (i < 0) throw("Negatív faktoriális");
+	if (i == 0) return 1;
+	return(i * fact(i - 1));
+}
 
 double calc(std::vector<Token> tokenisedInput) {
 	if (!zarojelekJokE(tokenisedInput)) throw("Nem jók a zárójelek báttya");
@@ -218,6 +245,23 @@ double calc(std::vector<Token> tokenisedInput) {
 	}
 	//{ '+', '-', '*', '/', '(', ')', '.', '^' };
 
+	while (kindBenneVanE(tokenisedInput, '!'))
+	{
+		bool megvan = false;
+		for (int jelHelye = 0; jelHelye < tokenisedInput.size() && !megvan; jelHelye++)
+		{
+			if (tokenisedInput[jelHelye].kind == '!')
+			{
+				megvan = true;
+				if (jelHelye == 0 || tokenisedInput[jelHelye - 1].kind != 'n')
+					throw("A műveleti jel bal oldala nem szám");
+				double tempCalcVal = fact(tokenisedInput[jelHelye - 1].value);
+				tokenisedInput.erase(tokenisedInput.begin() + (jelHelye - 1), tokenisedInput.begin() + (jelHelye + 1));
+				tokenisedInput.insert(tokenisedInput.begin() + (jelHelye - 1), Token('n', tempCalcVal));
+			}
+		}
+	}
+
 	while (kindBenneVanE(tokenisedInput, '^'))
 	{
 		bool megvan = false;
@@ -291,7 +335,7 @@ double calc(std::vector<Token> tokenisedInput) {
 	}
 
 	if (tokenisedInput.size() == 1 && tokenisedInput[0].kind == 'n') return tokenisedInput[0].value; //ha szám a végeredmény
-	else if (tokenisedInput.size() > 1 && tokenisedInput[0].kind == 'n' && tokenisedInput[1].kind == 'n') throw("Két érték közül hiányzik művelet!");
+	//else if (tokenisedInput.size() > 1 && tokenisedInput[0].kind == 'n' && tokenisedInput[1].kind == 'n') throw("Két érték közül hiányzik művelet!");
 
 	//else throw("elbacta a \"proGramozó\""); //a végeredmény nem egy darab szám ¯\_(ツ)_/¯
 	else dumpKinds(tokenisedInput);//dump token kinds from the current vector

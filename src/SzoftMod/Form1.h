@@ -71,6 +71,11 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::Button^ buttonSin;
 	private: System::Windows::Forms::Button^ buttonCos;
 	private: System::Windows::Forms::Button^ buttonTan;
+	private: System::Windows::Forms::Button^ buttonMPlus;
+	private: System::Windows::Forms::Button^ buttonM1;
+	private: System::Windows::Forms::Button^ buttonM2;
+	private: System::Windows::Forms::Button^ buttonM3;
+	private: System::Windows::Forms::Button^ buttonFact;
 
 	protected:
 
@@ -114,13 +119,18 @@ namespace CppCLRWinformsProjekt {
 			this->buttonSin = (gcnew System::Windows::Forms::Button());
 			this->buttonCos = (gcnew System::Windows::Forms::Button());
 			this->buttonTan = (gcnew System::Windows::Forms::Button());
+			this->buttonMPlus = (gcnew System::Windows::Forms::Button());
+			this->buttonM1 = (gcnew System::Windows::Forms::Button());
+			this->buttonM2 = (gcnew System::Windows::Forms::Button());
+			this->buttonM3 = (gcnew System::Windows::Forms::Button());
+			this->buttonFact = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// buttonEquals
 			// 
 			this->buttonEquals->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(192)));
-			this->buttonEquals->Location = System::Drawing::Point(104, 248);
+			this->buttonEquals->Location = System::Drawing::Point(104, 289);
 			this->buttonEquals->Name = L"buttonEquals";
 			this->buttonEquals->Size = System::Drawing::Size(40, 40);
 			this->buttonEquals->TabIndex = 0;
@@ -142,7 +152,7 @@ namespace CppCLRWinformsProjekt {
 			// button1
 			// 
 			this->button1->BackColor = System::Drawing::Color::Silver;
-			this->button1->Location = System::Drawing::Point(12, 202);
+			this->button1->Location = System::Drawing::Point(12, 243);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(40, 40);
 			this->button1->TabIndex = 2;
@@ -153,7 +163,7 @@ namespace CppCLRWinformsProjekt {
 			// button2
 			// 
 			this->button2->BackColor = System::Drawing::Color::Silver;
-			this->button2->Location = System::Drawing::Point(58, 202);
+			this->button2->Location = System::Drawing::Point(58, 243);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(40, 40);
 			this->button2->TabIndex = 3;
@@ -164,7 +174,7 @@ namespace CppCLRWinformsProjekt {
 			// button3
 			// 
 			this->button3->BackColor = System::Drawing::Color::Silver;
-			this->button3->Location = System::Drawing::Point(104, 202);
+			this->button3->Location = System::Drawing::Point(104, 243);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(40, 40);
 			this->button3->TabIndex = 4;
@@ -175,7 +185,7 @@ namespace CppCLRWinformsProjekt {
 			// button4
 			// 
 			this->button4->BackColor = System::Drawing::Color::Silver;
-			this->button4->Location = System::Drawing::Point(12, 156);
+			this->button4->Location = System::Drawing::Point(12, 197);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(40, 40);
 			this->button4->TabIndex = 5;
@@ -186,7 +196,7 @@ namespace CppCLRWinformsProjekt {
 			// button5
 			// 
 			this->button5->BackColor = System::Drawing::Color::Silver;
-			this->button5->Location = System::Drawing::Point(58, 156);
+			this->button5->Location = System::Drawing::Point(58, 197);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(40, 40);
 			this->button5->TabIndex = 6;
@@ -197,7 +207,7 @@ namespace CppCLRWinformsProjekt {
 			// button6
 			// 
 			this->button6->BackColor = System::Drawing::Color::Silver;
-			this->button6->Location = System::Drawing::Point(104, 156);
+			this->button6->Location = System::Drawing::Point(104, 197);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(40, 40);
 			this->button6->TabIndex = 7;
@@ -208,7 +218,7 @@ namespace CppCLRWinformsProjekt {
 			// button7
 			// 
 			this->button7->BackColor = System::Drawing::Color::Silver;
-			this->button7->Location = System::Drawing::Point(12, 110);
+			this->button7->Location = System::Drawing::Point(12, 151);
 			this->button7->Name = L"button7";
 			this->button7->Size = System::Drawing::Size(40, 40);
 			this->button7->TabIndex = 8;
@@ -219,7 +229,7 @@ namespace CppCLRWinformsProjekt {
 			// button8
 			// 
 			this->button8->BackColor = System::Drawing::Color::Silver;
-			this->button8->Location = System::Drawing::Point(58, 110);
+			this->button8->Location = System::Drawing::Point(58, 151);
 			this->button8->Name = L"button8";
 			this->button8->Size = System::Drawing::Size(40, 40);
 			this->button8->TabIndex = 9;
@@ -230,7 +240,7 @@ namespace CppCLRWinformsProjekt {
 			// button9
 			// 
 			this->button9->BackColor = System::Drawing::Color::Silver;
-			this->button9->Location = System::Drawing::Point(104, 110);
+			this->button9->Location = System::Drawing::Point(104, 151);
 			this->button9->Name = L"button9";
 			this->button9->Size = System::Drawing::Size(40, 40);
 			this->button9->TabIndex = 10;
@@ -241,7 +251,7 @@ namespace CppCLRWinformsProjekt {
 			// button0
 			// 
 			this->button0->BackColor = System::Drawing::Color::Silver;
-			this->button0->Location = System::Drawing::Point(58, 248);
+			this->button0->Location = System::Drawing::Point(58, 289);
 			this->button0->Name = L"button0";
 			this->button0->Size = System::Drawing::Size(40, 40);
 			this->button0->TabIndex = 11;
@@ -252,7 +262,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonPlus
 			// 
 			this->buttonPlus->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonPlus->Location = System::Drawing::Point(150, 202);
+			this->buttonPlus->Location = System::Drawing::Point(150, 243);
 			this->buttonPlus->Name = L"buttonPlus";
 			this->buttonPlus->Size = System::Drawing::Size(40, 40);
 			this->buttonPlus->TabIndex = 12;
@@ -263,7 +273,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonMinus
 			// 
 			this->buttonMinus->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonMinus->Location = System::Drawing::Point(150, 248);
+			this->buttonMinus->Location = System::Drawing::Point(150, 289);
 			this->buttonMinus->Name = L"buttonMinus";
 			this->buttonMinus->Size = System::Drawing::Size(40, 40);
 			this->buttonMinus->TabIndex = 13;
@@ -286,7 +296,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonDot
 			// 
 			this->buttonDot->BackColor = System::Drawing::Color::Silver;
-			this->buttonDot->Location = System::Drawing::Point(12, 248);
+			this->buttonDot->Location = System::Drawing::Point(12, 289);
 			this->buttonDot->Name = L"buttonDot";
 			this->buttonDot->Size = System::Drawing::Size(40, 40);
 			this->buttonDot->TabIndex = 15;
@@ -297,7 +307,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonMultiply
 			// 
 			this->buttonMultiply->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonMultiply->Location = System::Drawing::Point(150, 156);
+			this->buttonMultiply->Location = System::Drawing::Point(150, 197);
 			this->buttonMultiply->Name = L"buttonMultiply";
 			this->buttonMultiply->Size = System::Drawing::Size(40, 40);
 			this->buttonMultiply->TabIndex = 16;
@@ -308,7 +318,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonDivide
 			// 
 			this->buttonDivide->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonDivide->Location = System::Drawing::Point(150, 110);
+			this->buttonDivide->Location = System::Drawing::Point(150, 151);
 			this->buttonDivide->Name = L"buttonDivide";
 			this->buttonDivide->Size = System::Drawing::Size(40, 40);
 			this->buttonDivide->TabIndex = 17;
@@ -319,7 +329,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonClear
 			// 
 			this->buttonClear->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonClear->Location = System::Drawing::Point(12, 64);
+			this->buttonClear->Location = System::Drawing::Point(12, 59);
 			this->buttonClear->Name = L"buttonClear";
 			this->buttonClear->Size = System::Drawing::Size(40, 40);
 			this->buttonClear->TabIndex = 18;
@@ -330,7 +340,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonBackspace
 			// 
 			this->buttonBackspace->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonBackspace->Location = System::Drawing::Point(58, 64);
+			this->buttonBackspace->Location = System::Drawing::Point(12, 105);
 			this->buttonBackspace->Name = L"buttonBackspace";
 			this->buttonBackspace->Size = System::Drawing::Size(40, 40);
 			this->buttonBackspace->TabIndex = 19;
@@ -341,7 +351,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonLBracket
 			// 
 			this->buttonLBracket->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonLBracket->Location = System::Drawing::Point(104, 64);
+			this->buttonLBracket->Location = System::Drawing::Point(58, 105);
 			this->buttonLBracket->Name = L"buttonLBracket";
 			this->buttonLBracket->Size = System::Drawing::Size(40, 40);
 			this->buttonLBracket->TabIndex = 20;
@@ -352,7 +362,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonRBracket
 			// 
 			this->buttonRBracket->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonRBracket->Location = System::Drawing::Point(150, 64);
+			this->buttonRBracket->Location = System::Drawing::Point(104, 105);
 			this->buttonRBracket->Name = L"buttonRBracket";
 			this->buttonRBracket->Size = System::Drawing::Size(40, 40);
 			this->buttonRBracket->TabIndex = 21;
@@ -363,7 +373,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonPower
 			// 
 			this->buttonPower->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonPower->Location = System::Drawing::Point(196, 64);
+			this->buttonPower->Location = System::Drawing::Point(196, 105);
 			this->buttonPower->Name = L"buttonPower";
 			this->buttonPower->Size = System::Drawing::Size(40, 40);
 			this->buttonPower->TabIndex = 22;
@@ -374,7 +384,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonSqrt
 			// 
 			this->buttonSqrt->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonSqrt->Location = System::Drawing::Point(196, 110);
+			this->buttonSqrt->Location = System::Drawing::Point(196, 151);
 			this->buttonSqrt->Name = L"buttonSqrt";
 			this->buttonSqrt->Size = System::Drawing::Size(40, 40);
 			this->buttonSqrt->TabIndex = 23;
@@ -385,7 +395,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonSin
 			// 
 			this->buttonSin->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonSin->Location = System::Drawing::Point(196, 156);
+			this->buttonSin->Location = System::Drawing::Point(196, 197);
 			this->buttonSin->Name = L"buttonSin";
 			this->buttonSin->Size = System::Drawing::Size(40, 40);
 			this->buttonSin->TabIndex = 24;
@@ -396,7 +406,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonCos
 			// 
 			this->buttonCos->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonCos->Location = System::Drawing::Point(196, 202);
+			this->buttonCos->Location = System::Drawing::Point(196, 243);
 			this->buttonCos->Name = L"buttonCos";
 			this->buttonCos->Size = System::Drawing::Size(40, 40);
 			this->buttonCos->TabIndex = 25;
@@ -407,7 +417,7 @@ namespace CppCLRWinformsProjekt {
 			// buttonTan
 			// 
 			this->buttonTan->BackColor = System::Drawing::Color::LightSteelBlue;
-			this->buttonTan->Location = System::Drawing::Point(196, 248);
+			this->buttonTan->Location = System::Drawing::Point(196, 289);
 			this->buttonTan->Name = L"buttonTan";
 			this->buttonTan->Size = System::Drawing::Size(40, 40);
 			this->buttonTan->TabIndex = 26;
@@ -415,11 +425,67 @@ namespace CppCLRWinformsProjekt {
 			this->buttonTan->UseVisualStyleBackColor = false;
 			this->buttonTan->Click += gcnew System::EventHandler(this, &Form1::buttonTan_Click);
 			// 
+			// buttonMPlus
+			// 
+			this->buttonMPlus->Location = System::Drawing::Point(58, 59);
+			this->buttonMPlus->Name = L"buttonMPlus";
+			this->buttonMPlus->Size = System::Drawing::Size(40, 40);
+			this->buttonMPlus->TabIndex = 27;
+			this->buttonMPlus->Text = L"M+";
+			this->buttonMPlus->UseVisualStyleBackColor = true;
+			this->buttonMPlus->Click += gcnew System::EventHandler(this, &Form1::buttonMPlus_Click);
+			// 
+			// buttonM1
+			// 
+			this->buttonM1->Location = System::Drawing::Point(104, 59);
+			this->buttonM1->Name = L"buttonM1";
+			this->buttonM1->Size = System::Drawing::Size(40, 40);
+			this->buttonM1->TabIndex = 28;
+			this->buttonM1->Text = L"M1";
+			this->buttonM1->UseVisualStyleBackColor = true;
+			this->buttonM1->Click += gcnew System::EventHandler(this, &Form1::buttonM1_Click);
+			// 
+			// buttonM2
+			// 
+			this->buttonM2->Location = System::Drawing::Point(150, 59);
+			this->buttonM2->Name = L"buttonM2";
+			this->buttonM2->Size = System::Drawing::Size(40, 40);
+			this->buttonM2->TabIndex = 29;
+			this->buttonM2->Text = L"M2";
+			this->buttonM2->UseVisualStyleBackColor = true;
+			this->buttonM2->Click += gcnew System::EventHandler(this, &Form1::buttonM2_Click);
+			// 
+			// buttonM3
+			// 
+			this->buttonM3->Location = System::Drawing::Point(196, 59);
+			this->buttonM3->Name = L"buttonM3";
+			this->buttonM3->Size = System::Drawing::Size(40, 40);
+			this->buttonM3->TabIndex = 30;
+			this->buttonM3->Text = L"M3";
+			this->buttonM3->UseVisualStyleBackColor = true;
+			this->buttonM3->Click += gcnew System::EventHandler(this, &Form1::buttonM3_Click);
+			// 
+			// buttonFact
+			// 
+			this->buttonFact->BackColor = System::Drawing::Color::LightSteelBlue;
+			this->buttonFact->Location = System::Drawing::Point(150, 105);
+			this->buttonFact->Name = L"buttonFact";
+			this->buttonFact->Size = System::Drawing::Size(40, 40);
+			this->buttonFact->TabIndex = 31;
+			this->buttonFact->Text = L"!";
+			this->buttonFact->UseVisualStyleBackColor = false;
+			this->buttonFact->Click += gcnew System::EventHandler(this, &Form1::buttonFact_Click);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(249, 301);
+			this->ClientSize = System::Drawing::Size(249, 341);
+			this->Controls->Add(this->buttonFact);
+			this->Controls->Add(this->buttonM3);
+			this->Controls->Add(this->buttonM2);
+			this->Controls->Add(this->buttonM1);
+			this->Controls->Add(this->buttonMPlus);
 			this->Controls->Add(this->buttonTan);
 			this->Controls->Add(this->buttonCos);
 			this->Controls->Add(this->buttonSin);
@@ -557,6 +623,9 @@ namespace CppCLRWinformsProjekt {
 	private: System::Void buttonPower_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->textBox1->Text = this->textBox1->Text + "^";
 	}
+	private: System::Void buttonFact_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->textBox1->Text = this->textBox1->Text + "!";
+	}
 	private: System::Void buttonSqrt_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->textBox1->Text = this->textBox1->Text + "sqrt(";
 	}
@@ -580,5 +649,46 @@ namespace CppCLRWinformsProjekt {
 	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		doTheCalc();
 	}
-	};
+
+	bool mMegnyomva = false;
+	System::String^ m1 = "";
+	System::String^ m2 = "";
+	System::String^ m3 = "";
+	void switchMegnyomva()
+	{
+		mMegnyomva = !mMegnyomva;
+		if (mMegnyomva) this->buttonMPlus->BackColor = System::Drawing::Color::LightSeaGreen;
+		else this->buttonMPlus->BackColor = System::Drawing::SystemColors::Control;
+	}
+
+	private: System::Void buttonMPlus_Click(System::Object^ sender, System::EventArgs^ e) {
+		switchMegnyomva();
+	}
+
+	private: System::Void buttonM1_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (mMegnyomva)
+		{
+			switchMegnyomva();
+			m1 = this->labelRetVal->Text;
+		}
+		else this->textBox1->Text = this->textBox1->Text + m1;
+	}
+
+	private: System::Void buttonM2_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (mMegnyomva)
+		{
+			switchMegnyomva();
+			m2 = this->labelRetVal->Text;
+		}
+		else this->textBox1->Text = this->textBox1->Text + m2;
+	}
+	private: System::Void buttonM3_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (mMegnyomva)
+		{
+			switchMegnyomva();
+			m3 = this->labelRetVal->Text;
+		}
+		else this->textBox1->Text = this->textBox1->Text + m3;
+	}
+};
 }
