@@ -119,17 +119,17 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) { //DONE
 
 
 	//ide jön az hogy negatív számoknak a FIX
-	for (int tokenIndex = 0; tokenIndex < tokenisedInput.size(); tokenIndex++)
+	for (int tokenIndex = 0; tokenIndex < tokenisedInput.size(); tokenIndex++)//végigmegyünk a tokeneken
 	{
 		if (tokenisedInput[tokenIndex].kind == 'n' && tokenIndex > 0 && tokenisedInput[tokenIndex - 1].kind == '-') //ha szám és előtte - van
 		{
-			if (tokenIndex == 1)
+			if (tokenIndex == 1)//ha a legelején van a -
 			{
 				double tempVal = 0.0 - tokenisedInput[tokenIndex].value;
 				tokenisedInput.erase(tokenisedInput.begin() + (tokenIndex - 1), tokenisedInput.begin() + (tokenIndex + 1));
 				tokenisedInput.insert(tokenisedInput.begin() + (tokenIndex - 1), Token('n', tempVal));
 			}
-			else if (tokenisedInput[tokenIndex - 2].kind != ')' && tokenisedInput[tokenIndex - 2].kind != 'n' && tokenisedInput[tokenIndex - 2].kind != '.')
+			else if (tokenisedInput[tokenIndex - 2].kind != ')' && tokenisedInput[tokenIndex - 2].kind != 'n' && tokenisedInput[tokenIndex - 2].kind != '.' && tokenisedInput[tokenIndex - 2].kind != '!')
 			{
 				double tempVal = 0.0 - tokenisedInput[tokenIndex].value;
 				tokenisedInput.erase(tokenisedInput.begin() + (tokenIndex - 1), tokenisedInput.begin() + (tokenIndex + 1));
