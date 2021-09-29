@@ -159,6 +159,9 @@ double fact(double i)
 
 double calc(std::vector<Token> tokenisedInput) {
 	if (!zarojelekJokE(tokenisedInput)) throw("Nem jók a zárójelek báttya");
+
+
+
 	while (kindBenneVanE(tokenisedInput, 'f'))//először függvények belseje feldolgozása
 	{
 		bool megvan = false;
@@ -334,11 +337,15 @@ double calc(std::vector<Token> tokenisedInput) {
 
 	}
 
-	if (tokenisedInput.size() == 1 && tokenisedInput[0].kind == 'n') return tokenisedInput[0].value; //ha szám a végeredmény
-	//else if (tokenisedInput.size() > 1 && tokenisedInput[0].kind == 'n' && tokenisedInput[1].kind == 'n') throw("Két érték közül hiányzik művelet!");
+	//megnézzük hogy a számok jók-e nem szabad két number tokennek egymás után következnie
+	for (int tokenIndex = 0; tokenIndex < tokenisedInput.size(); tokenIndex++)
+	{
+		if (tokenisedInput[tokenIndex].kind == 'n' && tokenIndex > 0 && tokenisedInput[tokenIndex - 1].kind == 'n') throw("Hiányzó művelet!");
+	}
 
-	//else throw("elbacta a \"proGramozó\""); //a végeredmény nem egy darab szám ¯\_(ツ)_/¯
-	else dumpKinds(tokenisedInput);//dump token kinds from the current vector
+	if (tokenisedInput.size() == 1 && tokenisedInput[0].kind == 'n') return tokenisedInput[0].value; //ha szám a végeredmény
+	else throw("elbacta a \"proGramozó\""); //a végeredmény nem egy darab szám ¯\_(ツ)_/¯
+	//else dumpKinds(tokenisedInput);//dump token kinds from the current vector
 }
 
 double calculate(std::vector<char> inputCharVect) {//ez hívódik meg
