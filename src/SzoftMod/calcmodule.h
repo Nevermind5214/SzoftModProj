@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include <math.h>
 static std::string toStandardString(System::String^ myString);
 static String^ toSystemString(std::string myString);
@@ -8,17 +8,14 @@ std::vector<std::string> fuggvenyWhitelist = { "sqrt", "sin", "cos", "tan" };
 
 class Token {
 public:
-	char kind; // fvnÈv: f, m˚veleti jel, z·rÛjel: ˆnmaga, sz·m: n
-	double value; //sz·mhoz
-	std::string name; //f¸ggvÈnynÈvhez
-	//Token() : kind(0) {}
+	char kind; // fvn√©v: f, m≈±veleti jel, z√°r√≥jel: √∂nmaga, sz√°m: n
+	double value; //sz√°mhoz √©s fv indexhez
 
-	Token(char ch, double val) : kind(ch), value(val) {}//sz·mhoz
-	Token(char ch) : kind(ch) {}//m˚veleti jelhez, z·rÛjelhez
-	Token(char ch, std::string n) : kind(ch), name(n) {}//f¸ggvÈnynÈvhez
+	Token(char ch, double val) : kind(ch), value(val) {}//sz√°mhoz
+	Token(char ch) : kind(ch) {}//m≈±veleti jelhez, z√°r√≥jelhez
 };
 
-bool benneVanE(std::vector<char>charVect, char myChar)//megnÈzi hogy az adott karakter benne van-e az adott tˆmbben
+bool benneVanE(std::vector<char>charVect, char myChar)//megn√©zi hogy az adott karakter benne van-e az adott t√∂mbben
 {
 	for (char currentChar : charVect)
 	{
@@ -27,7 +24,16 @@ bool benneVanE(std::vector<char>charVect, char myChar)//megnÈzi hogy az adott ka
 	return false;
 }
 
-bool allowedChar(char myChar)//ha sz·mjegy vagy m˚veleti jel az adott karakter akkor megengedett
+bool kindBenneVanE(std::vector<Token>tokenVect, char myChar)//megn√©zi hogy az adott karakter benne van-e az adott t√∂mbben
+{
+	for (Token currentToken : tokenVect)
+	{
+		if (currentToken.kind == myChar) return true;
+	}
+	return false;
+}
+
+bool allowedChar(char myChar)//ha sz√°mjegy vagy m≈±veleti jel az adott karakter akkor megengedett
 {
 	return (isdigit(myChar) || benneVanE(muveletiJelek, myChar));
 }
@@ -50,55 +56,51 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) { //DONE
 	int dotCounter = 1;
 	bool beforeDot = true;
 
-	for (int i = 0; i < inputCharVect.size(); i++)//vÈgignÈzz¸k a tˆmbˆt karakterenkÈnt
+	for (int i = 0; i < inputCharVect.size(); i++)//v√©gign√©zz√ºk a t√∂mb√∂t karakterenk√©nt
 	{
-		if (inputCharVect[i]!= '.' && !isdigit(inputCharVect[i]) && (i - 1) >= 0 && isdigit(inputCharVect[i - 1]))//elÈrt¸k a sz·m vÈgÈt, ez m·r nem sz·mjegy de mÈg az elızı lÈtezik Ès az volt
+		if (inputCharVect[i] != '.' && !isdigit(inputCharVect[i]) && (i - 1) >= 0 && isdigit(inputCharVect[i - 1]))//el√©rt√ºk a sz√°m v√©g√©t, ez m√°r nem sz√°mjegy de m√©g az el≈ëz≈ë l√©tezik √©s az volt
 		{
-			tokenisedInput.push_back(Token('n', retval)); //sz·m vÈge, resetelj¸k a segÈdv·ltozÛkat Ès beletessz¸k
+			tokenisedInput.push_back(Token('n', retval)); //sz√°m v√©ge, resetelj√ºk a seg√©dv√°ltoz√≥kat √©s beletessz√ºk
 			retval = 0;
 			dotCounter = 1;
 			beforeDot = true;
 		}
 
-		//ha sz·mjegy
-		if (isdigit(inputCharVect[i]) || inputCharVect[i] == '.')//sz·mjegy vagy pont (a .012  stb. is elfogadott
+		//ha sz√°mjegy
+		if (isdigit(inputCharVect[i]) || inputCharVect[i] == '.')//sz√°mjegy vagy pont (a .012  stb. is elfogadott
 		{
 			if (inputCharVect[i] == '.')
 			{
 				beforeDot = false;
-				if ((i == inputCharVect.size() - 1) || !isdigit(inputCharVect[i + 1])) throw("A pont ut·n sz·mjegynek kell ·llnia!");
+				if ((i == inputCharVect.size() - 1) || !isdigit(inputCharVect[i + 1])) throw("A pont ut√°n sz√°mjegynek kell √°llnia!");
 			}
 			else
 			{
-				if (beforeDot) retval = retval * 10.0 + (inputCharVect[i] - 48); //pont elıtt, cs˙nya ascii hack, nem volt jÛ sehogy sem, Ìgy most m˚xik
+				if (beforeDot) retval = retval * 10.0 + (inputCharVect[i] - 48); //pont el≈ëtt, cs√∫nya ascii hack, nem volt j√≥ sehogy sem, √≠gy most m≈±xik
 				else
 				{
-					retval = retval + (inputCharVect[i] - 48) * pow(0.1, dotCounter);//pont ut·n
+					retval = retval + (inputCharVect[i] - 48) * pow(0.1, dotCounter);//pont ut√°n
 					dotCounter++;
 				}
 			}
 		}
 
-		//ha m˚veleti jel
+		//ha m≈±veleti jel
 		else if (benneVanE(muveletiJelek, inputCharVect[i])) tokenisedInput.push_back(Token(inputCharVect[i]));
 
-		//ha b·rmi m·s, megnÈzz¸k, hogy f¸ggvÈny-e
+		//ha b√°rmi m√°s, megn√©zz√ºk, hogy f√ºggv√©ny-e
 		else
 		{
 			bool megvan = false;
-			for (int fuggvenyekIndex = 0; fuggvenyekIndex < fuggvenyWhitelist.size() && !megvan; fuggvenyekIndex++) //megnÈz¸nk minden fv-t
+			for (int fuggvenyekIndex = 0; fuggvenyekIndex < fuggvenyWhitelist.size() && !megvan; fuggvenyekIndex++) //megn√©z√ºnk minden fv-t
 			{
 				bool mindjo = true;//eddig minden karakter egyezik-e
-				std::string currentFuggvenynev = "";
-				for (int fuggKarIndex = 0; fuggKarIndex < fuggvenyWhitelist[fuggvenyekIndex].size() && (i + fuggKarIndex) < inputCharVect.size(); fuggKarIndex++) //karakterenkÈnt
+				for (int fuggKarIndex = 0; fuggKarIndex < fuggvenyWhitelist[fuggvenyekIndex].size() && (i + fuggKarIndex) < inputCharVect.size(); fuggKarIndex++) //karakterenk√©nt
 				{
-					if (inputCharVect[i + fuggKarIndex] == fuggvenyWhitelist[fuggvenyekIndex][fuggKarIndex]) {
-						currentFuggvenynev = currentFuggvenynev + inputCharVect[i + fuggKarIndex];
-					}
-					else mindjo = false;
-					if (fuggvenyWhitelist[fuggvenyekIndex].size() == currentFuggvenynev.size() && mindjo) {
-						tokenisedInput.push_back(Token('f', currentFuggvenynev));
-						i = i + currentFuggvenynev.size() - 1;
+					if (inputCharVect[i + fuggKarIndex] != fuggvenyWhitelist[fuggvenyekIndex][fuggKarIndex]) mindjo = false;
+					if (fuggvenyWhitelist[fuggvenyekIndex].size() == fuggKarIndex + 1 && mindjo) {
+						tokenisedInput.push_back(Token('f', fuggvenyekIndex));
+						i = i + fuggKarIndex;
 						megvan = true;
 					}
 				}
@@ -110,158 +112,191 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) { //DONE
 			}
 		}
 
-		//elÈrt¸nk a karakterek vÈgÈre Ès az utsÛ jegy sz·m volt akkor bele kell tenni mert m·r nem lesz tˆbb a for-ban
+		//el√©rt√ºnk a karakterek v√©g√©re √©s az uts√≥ jegy sz√°m volt akkor bele kell tenni mert m√°r nem lesz t√∂bb a for-ban
 		if ((i == inputCharVect.size() - 1) && (isdigit(inputCharVect[i]))) tokenisedInput.push_back(Token('n', retval));
 	}
 
 	return tokenisedInput;
 }
 
-double calculate(std::vector<char> inputCharVect) {
-	std::vector<Token> tokenisedInput = tokenise(inputCharVect);
+void dumpKinds(std::vector<Token> tokenisedInput)
+{
+	std::vector<char> errKinds;
+	for (Token currToken : tokenisedInput)
+	{
+		errKinds.push_back(currToken.kind);
+	}
+	throw(errKinds);
+}
 
-	/*
-	if (zarojelekJokE(inputCharVect)) {
 
-		while (vanBenneFuggveny(inputCharVect)) {//DONE
-			bool megvan = false;
-			for (int karakterPozicio = 0; karakterPozicio < inputCharVect.size() && !megvan; karakterPozicio++)
+double calc(std::vector<Token> tokenisedInput) {
+	if (!zarojelekJokE(tokenisedInput)) throw("Nem j√≥k a z√°r√≥jelek b√°ttya");
+	while (kindBenneVanE(tokenisedInput, 'f'))//el≈ësz√∂r f√ºggv√©nyek belseje feldolgoz√°sa
+	{
+		bool megvan = false;
+		for (int fuggvenyPos = 0; fuggvenyPos < tokenisedInput.size() && !megvan; fuggvenyPos++)//megkeress√ºk az els≈ë fv-t
+		{
+			if (tokenisedInput[fuggvenyPos].kind == 'f')//megtal√°lom akkor is
 			{
-				for (int fuggvenyekIndex = 0; fuggvenyekIndex < fuggvenyWhitelist.size() && !megvan; fuggvenyekIndex++) //megnÈz¸nk minden fv-t
+				if (tokenisedInput.size() < (fuggvenyPos + 2) || tokenisedInput[fuggvenyPos + 1].kind != '(') throw("A f√ºggv√©ny ut√°n z√°r√≥jel k√∂telez≈ë!");
+				int nyitott = 1;
+				for (int csukoZPos = fuggvenyPos + 2; csukoZPos < tokenisedInput.size() && !megvan; csukoZPos++)//megkeresem a csuk√≥z√°r√≥jel index√©t is
 				{
-					bool mindjo = true;
-					for (int fuggKarIndex = 0; fuggKarIndex < fuggvenyWhitelist[fuggvenyekIndex].size() && (karakterPozicio + fuggKarIndex) < inputCharVect.size(); fuggKarIndex++) //karakterenkÈnt
+					if (tokenisedInput[csukoZPos].kind == '(') nyitott++;
+					if (tokenisedInput[csukoZPos].kind == ')') nyitott--;
+
+					if (tokenisedInput[csukoZPos].kind == ')' && nyitott == 0)//megvan!
 					{
-						if (inputCharVect[karakterPozicio + fuggKarIndex] != fuggvenyWhitelist[fuggvenyekIndex][fuggKarIndex]) mindjo = false;
-						if (fuggvenyWhitelist[fuggvenyekIndex].size() == fuggKarIndex + 1 && mindjo) {
-							megvan = true;
-							double csereErtek=0;
-							int kovizarojelHelye = 0;
-							for (int i = karakterPozicio + 2; i < inputCharVect.size() && kovizarojelHelye == 0; i++)
-							{
-								if (inputCharVect[i] == ')') kovizarojelHelye = i;
-							}
-							std::vector<char> tempCsereErtekVektor;
-							for (int i = karakterPozicio + fuggvenyWhitelist[fuggvenyekIndex].size()+1; i < kovizarojelHelye; i++)
-							{
-								tempCsereErtekVektor.push_back(inputCharVect[i]);
-							}
-							if (karakterPozicio + fuggvenyWhitelist[fuggvenyekIndex].size() + 1 == kovizarojelHelye) throw("‹res a f¸ggvÈny");
-							csereErtek = calculate(tempCsereErtekVektor);
-							switch (fuggvenyekIndex) // "sqrt", "sin", "cos", "tan",
-							{
-							case 0://sqrt
-								csereErtek = sqrt(csereErtek);
-								break;
-							case 1://sin
-								csereErtek = sin(csereErtek);
-								break;
-							case 2://cos
-								csereErtek = cos(csereErtek);
-								break;
-							case 3://tan
-								csereErtek = tan(csereErtek);
-								break;
-							default:
-								throw("valamiÈrt nem tal·lta a fvt a switchben");
-								break;
-							}
-
-
-							inputCharVect.erase(inputCharVect.begin() + karakterPozicio, inputCharVect.begin() + kovizarojelHelye+1);
-							std::string temporaryMystring = std::to_string(csereErtek);
-							for (int i = 0; i < temporaryMystring.size(); i++)
-							{
-								inputCharVect.insert(inputCharVect.begin() + karakterPozicio + i, temporaryMystring[i]);
-							}
-
+						if (fuggvenyPos + 2 == csukoZPos) throw("√úres a f√ºggv√©ny!");
+						megvan = true;
+						std::vector<Token> tempTokenvect;//ezt fogjuk kisz√°molni rekurz√≠van
+						for (int i = fuggvenyPos + 2; i < csukoZPos; i++)
+						{
+							tempTokenvect.push_back(tokenisedInput[i]);//beletessz√ºk a z√°r√≥jelen bel√ºli r√©szt
 						}
-					}
-				}
-			}
-			break;
-		}
-
-		while (vanBenneNyitoZarojel(inputCharVect))//DONE
-		{
-			bool kellEMegSzamolni = true;
-			for (int nyitoIndex = 0; nyitoIndex < inputCharVect.size() && kellEMegSzamolni; nyitoIndex++)
-			{
-				if (inputCharVect[nyitoIndex] == '(' && inputCharVect[nyitoIndex + 1] != '(') {
-					for (int zaroIndex = nyitoIndex+1; zaroIndex < inputCharVect.size() && kellEMegSzamolni; zaroIndex++)
-					{
-						if (inputCharVect[zaroIndex] == ')') {
-							std::vector<char> tempZarojelVect;
-							for (int i = nyitoIndex + 1; i <= zaroIndex - 1; i++)
-							{
-								tempZarojelVect.push_back(inputCharVect[i]);
-							}
-
-							inputCharVect.erase(inputCharVect.begin() + nyitoIndex, inputCharVect.begin() + zaroIndex+1);
-
-							std::string tempCalcString = std::to_string(calculate(tempZarojelVect));
-
-							for (int i = 0; i < tempCalcString.size(); i++)
-							{
-								inputCharVect.insert(inputCharVect.begin() + nyitoIndex + i, tempCalcString[i]);
-							}
-							kellEMegSzamolni = false;
+						int fuggTipus = tokenisedInput[fuggvenyPos].value;//ez kell mert t√∂r√∂lj√∂k az eredeti adatot
+						tokenisedInput.erase(tokenisedInput.begin() + fuggvenyPos, tokenisedInput.begin() + csukoZPos + 1);
+						double belsoErtek = calc(tempTokenvect);
+						switch (fuggTipus) {//{ "sqrt", "sin", "cos", "tan" };
+						case 0://sqrt
+							belsoErtek = sqrt(belsoErtek);
+							break;
+						case 1://sin
+							belsoErtek = sin(belsoErtek);
+							break;
+						case 2://cos
+							belsoErtek = cos(belsoErtek);
+							break;
+						case 3://tan
+							belsoErtek = tan(belsoErtek);
+							break;
+						default:
+							throw("Nem ismert f√ºggv√©ny!");
 						}
+						tokenisedInput.insert(tokenisedInput.begin() + fuggvenyPos, Token('n', belsoErtek));
+
 					}
 				}
 			}
 		}
+	}
 
-
-
-		while (vanBenneHatvanyozas(inputCharVect))
+	while (kindBenneVanE(tokenisedInput, '('))//z√°r√≥jelek feldolgoz√°sa el√©g a ( karakter mert megn√©zt√ºk hogy j√≥k-e kor√°bban
+	{
+		bool megvan = false;
+		for (int nyitoPos = 0; nyitoPos < tokenisedInput.size() && !megvan; nyitoPos++)
 		{
-			break;
-		}
-
-		while (vanBenneSzorzasOsztas(inputCharVect))
-		{
-
-			// "balsz·m*jobbsz·m" cuccot fel¸lÌrni az eredmÈnyÈvel erase insert-el
-			break; //debug
-			bool kellEMegSzamolni = true;
-			for (int szorzasHelye = 0; szorzasHelye < inputCharVect.size() && kellEMegSzamolni; szorzasHelye++)
+			if (tokenisedInput[nyitoPos].kind == '(')
 			{
-				if (inputCharVect[szorzasHelye] == '*')
+
+				int nyitott = 1;
+				for (int zaroPos = nyitoPos + 1; zaroPos < tokenisedInput.size() && !megvan; zaroPos++)
 				{
-					if (szorzasHelye == 0) throw("Nincs balÈrtÈk b·ttya");
-
-
-					int balertekIndex = szorzasHelye - 1;
-					while (balertekIndex > 0 && isdigit(inputCharVect[balertekIndex - 1]))
+					if (tokenisedInput[zaroPos].kind == '(') nyitott++;
+					if (tokenisedInput[zaroPos].kind == ')') nyitott--;
+					if (tokenisedInput[zaroPos].kind == ')' && nyitott == 0)
 					{
-						balertekIndex--;
+						megvan = true;
+						if (nyitoPos + 1 == zaroPos) throw("√úres a z√°r√≥jel");//√ºres a z√°r√≥jel
+						/*{
+							tokenisedInput.erase(tokenisedInput.begin() + nyitoPos, tokenisedInput.begin() + zaroPos + 1);//√ºres a z√°r√≥jel akk t√∂r√∂lj√ºk
+							if (tokenisedInput.size() == 0) tokenisedInput.push_back(Token('n', 0)); //ha csak egy √ºres z√°r√≥jel van √©s nincs m√°s
+						}*/
+						std::vector<Token> tempTokenvect;//ezt fogjuk kisz√°molni rekurz√≠van
+						for (int i = nyitoPos + 1; i < zaroPos; i++)
+						{
+							tempTokenvect.push_back(tokenisedInput[i]);//beletessz√ºk a z√°r√≥jelen bel√ºli r√©szt
+						}
+						tokenisedInput.erase(tokenisedInput.begin() + nyitoPos, tokenisedInput.begin() + (zaroPos + 1));
+						tokenisedInput.insert(tokenisedInput.begin() + nyitoPos, Token('n', calc(tempTokenvect)));
+
 					}
-
-					int jobbertekIndex = szorzasHelye + 1;
-					while (jobbertekIndex < inputCharVect.size() && isdigit(inputCharVect[balertekIndex + 1]))
-					{
-						balertekIndex++;
-					}
-
-					double
-
-						kellEMegSzamolni = false;
 				}
 			}
 		}
+	}
+	//{ '+', '-', '*', '/', '(', ')', '.', '^' };
 
-		while (vanBenneOsszeadasKivonas(inputCharVect))
+	while (kindBenneVanE(tokenisedInput, '^'))
+	{
+		bool megvan = false;
+		for (int jelHelye = 0; jelHelye < tokenisedInput.size() && !megvan; jelHelye++)
 		{
+			if (tokenisedInput[jelHelye].kind == '^')
+			{
+				megvan = true;
+				if (jelHelye == 0 || tokenisedInput[jelHelye - 1].kind != 'n' || jelHelye + 1 > tokenisedInput.size() - 1 || tokenisedInput[jelHelye + 1].kind != 'n')
+					throw("A m≈±veleti jel k√©t oldala nem sz√°m");
+				double tempCalcVal = pow(tokenisedInput[jelHelye - 1].value, tokenisedInput[jelHelye + 1].value);
+				tokenisedInput.erase(tokenisedInput.begin() + (jelHelye - 1), tokenisedInput.begin() + (jelHelye + 2));
+				tokenisedInput.insert(tokenisedInput.begin() + (jelHelye - 1), Token('n', tempCalcVal));
+			}
+		}
+	}
 
-			// "balsz·m+jobbsz·m" cuccot fel¸lÌrni az eredmÈnyÈvel  erase insert-el
-			break; //debug
+	while (kindBenneVanE(tokenisedInput, '*') || kindBenneVanE(tokenisedInput, '/'))
+	{
+		bool megvan = false;
+		for (int jelHelye = 0; jelHelye < tokenisedInput.size() && !megvan; jelHelye++)
+		{
+			if (tokenisedInput[jelHelye].kind == '*' || tokenisedInput[jelHelye].kind == '/')
+			{
+				megvan = true;
+				if (jelHelye == 0 || tokenisedInput[jelHelye - 1].kind != 'n' || jelHelye + 1 > tokenisedInput.size() - 1 || tokenisedInput[jelHelye + 1].kind != 'n')
+					throw("A m≈±veleti jel k√©t oldala nem sz√°m");
+				double tempCalcVal;
+				switch (tokenisedInput[jelHelye].kind) {//{"*", "/" };
+				case '*':
+					tempCalcVal = tokenisedInput[jelHelye - 1].value * tokenisedInput[jelHelye + 1].value;
+					break;
+				case '/':
+					tempCalcVal = tokenisedInput[jelHelye - 1].value / tokenisedInput[jelHelye + 1].value;
+					break;
+				default:
+					throw("Nem ismert m≈±velet!");
+				}
+				tokenisedInput.erase(tokenisedInput.begin() + (jelHelye - 1), tokenisedInput.begin() + (jelHelye + 2));
+				tokenisedInput.insert(tokenisedInput.begin() + (jelHelye - 1), Token('n', tempCalcVal));
+			}
+		}
+	}
+
+	while (kindBenneVanE(tokenisedInput, '+') || kindBenneVanE(tokenisedInput, '-'))
+	{
+		bool megvan = false;
+		for (int jelHelye = 0; jelHelye < tokenisedInput.size() && !megvan; jelHelye++)
+		{
+			if (tokenisedInput[jelHelye].kind == '+' || tokenisedInput[jelHelye].kind == '-')
+			{
+				megvan = true;
+				if (jelHelye == 0 || tokenisedInput[jelHelye - 1].kind != 'n' || jelHelye + 1 > tokenisedInput.size() - 1 || tokenisedInput[jelHelye + 1].kind != 'n')
+					throw("A m≈±veleti jel k√©t oldala nem sz√°m");
+				double tempCalcVal;
+				switch (tokenisedInput[jelHelye].kind) {//{ "+", "-"};
+				case '+':
+					tempCalcVal = tokenisedInput[jelHelye - 1].value + tokenisedInput[jelHelye + 1].value;
+					break;
+				case '-':
+					tempCalcVal = tokenisedInput[jelHelye - 1].value - tokenisedInput[jelHelye + 1].value;
+					break;
+				default:
+					throw("Nem ismert m≈±velet!");
+				}
+				tokenisedInput.erase(tokenisedInput.begin() + (jelHelye - 1), tokenisedInput.begin() + (jelHelye + 2));
+				tokenisedInput.insert(tokenisedInput.begin() + (jelHelye - 1), Token('n', tempCalcVal));
+			}
 		}
 
-		*/
-	if (tokenisedInput.size() > 0 && tokenisedInput[0].kind == 'n') return tokenisedInput[0].value;
-	if (tokenisedInput.size() > 0 && tokenisedInput[0].kind == 'f') throw(tokenisedInput[0].name);
-	else return 0;
-	//}
-	//else throw("nemjÛk a z·rÛjelek b·ttya");
+	}
+
+	if (tokenisedInput.size() == 1 && tokenisedInput[0].kind == 'n') return tokenisedInput[0].value; //ha sz√°m a v√©geredm√©ny
+	else if (tokenisedInput.size() > 1 && tokenisedInput[0].kind == 'n' && tokenisedInput[1].kind == 'n') throw("K√©t √©rt√©k k√∂z√ºl hi√°nyzik m≈±velet!");
+
+	//else throw("elbacta a \"proGramoz√≥\""); //a v√©geredm√©ny nem egy darab sz√°m ¬Ø\_(„ÉÑ)_/¬Ø
+	else dumpKinds(tokenisedInput);//dump token kinds from the current vector
+}
+
+double calculate(std::vector<char> inputCharVect) {//ez h√≠v√≥dik meg
+	return calc(tokenise(inputCharVect));//az√©rt itt alak√≠tjuk √°t, hogy ut√°na a m√°sik fv-t m√°r tudjuk rekurz√≠van h√≠vni a z√°r√≥jelekre
 }

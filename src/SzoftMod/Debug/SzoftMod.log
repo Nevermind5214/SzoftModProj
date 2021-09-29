@@ -1,9 +1,22 @@
 ﻿  CppCLR_WinformsProjekt.cpp
 D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\CppCLR_WinformsProjekt.cpp(11,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\CppCLR_WinformsProjekt.cpp(12,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(53,20): warning C4018: '<': signed/unsigned mismatch
-D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(89,50): warning C4018: '<': signed/unsigned mismatch
-D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(93,45): warning C4018: '<': signed/unsigned mismatch
-D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(93,111): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(59,20): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(95,50): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(98,45): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(98,111): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(138,41): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(142,31): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(144,53): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(158,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(188,35): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(194,46): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(224,35): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(229,83): warning C4018: '>': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(241,35): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(246,83): warning C4018: '>': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(268,35): warning C4018: '<': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(273,83): warning C4018: '>': signed/unsigned mismatch
+D:\IK\3\szoftmod\SzoftModProj\src\SzoftMod\calcmodule.h(298): warning C4715: 'calc': not all control paths return a value
   AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   SzoftMod.vcxproj -> D:\IK\3\szoftmod\SzoftModProj\src\Debug\SzoftMod.exe
