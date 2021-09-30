@@ -191,7 +191,8 @@ double calc(std::vector<Token> tokenisedInput) {
 						double belsoErtek = calc(tempTokenvect);
 						switch (fuggTipus) {//{ "sqrt", "sin", "cos", "tan" };
 						case 0://sqrt
-							belsoErtek = sqrt(belsoErtek);
+							if (belsoErtek >= 0) belsoErtek = sqrt(belsoErtek);
+							else throw("Negatív gyök nem értelmezett!");
 							break;
 						case 1://sin
 							belsoErtek = sin(belsoErtek);
