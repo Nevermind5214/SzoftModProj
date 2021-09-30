@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1632995560 source:d:\ik\3\szoftmod\szoftmodproj\testingsrc\testing\main.cpp
+	<iostream>
+	<math.h>
+	<string>
+	<vector>
+
