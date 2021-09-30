@@ -1,3 +1,5 @@
+//g++ main.cpp -o softtest
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -39,17 +41,10 @@ int main(int argc, char** argv)
                 {
                     inVectr.push_back(myChar);
                 }
-                std::cout<<"Eredmény= "<<calculate(inVectr)<<std::endl;
-            }
-            catch (std::string errorText) {
-                std::cout<<std::endl<<"Error: "<<errorText<<std::endl;
+                std::cout<<calculate(inVectr)<<std::endl;
             }
             catch (const char* err) {
-                std::cout<<std::endl<<"Error: "<<err<<std::endl;
-            }
-            catch (std::vector<char> errorVect) {
-                std::string koztesString(errorVect.begin(), errorVect.end());
-                std::cout<<std::endl<<"Error: "<<koztesString<<std::endl;
+                std::cout<<"Error: "<<err<<std::endl;
             }
         }
     }

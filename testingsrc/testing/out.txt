@@ -1,0 +1,6 @@
+6
+48
+3.64711e+94
+Error: A műveleti jel két oldala nem szám
+Error: A műveleti jel bal oldala nem szám
+Error: Nem jók a zárójelek báttya
