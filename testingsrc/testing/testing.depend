@@ -5,3 +5,12 @@
 	<string>
 	<vector>
 
+1633008394 source:c:\ikfelev3\szoftmod\szoftmodproj\testingsrc\testing\main.cpp
+	<iostream>
+	<string>
+	<vector>
+	"../../src/SzoftMod/calcmodule.h"
+
+1633008394 c:\ikfelev3\szoftmod\szoftmodproj\src\szoftmod\calcmodule.h
+	<math.h>
+
