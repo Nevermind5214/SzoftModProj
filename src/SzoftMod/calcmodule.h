@@ -3,7 +3,7 @@
 static std::string toStandardString(System::String^ myString);
 static String^ toSystemString(std::string myString);
 
-std::vector<char> muveletiJelek = { '+','-','*','/','(',')','.','^','!'};
+std::vector<char> muveletiJelek = { '+','-','*','/','(',')','.','^','!' };
 std::vector<std::string> fuggvenyWhitelist = { "sqrt", "sin", "cos", "tan" };
 
 class Token {
@@ -300,6 +300,7 @@ double calc(std::vector<Token> tokenisedInput) {
 					tempCalcVal = tokenisedInput[jelHelye - 1].value * tokenisedInput[jelHelye + 1].value;
 					break;
 				case '/':
+					if (tokenisedInput[jelHelye + 1].value == 0) throw("0-val nem osztunk :(");
 					tempCalcVal = tokenisedInput[jelHelye - 1].value / tokenisedInput[jelHelye + 1].value;
 					break;
 				default:
