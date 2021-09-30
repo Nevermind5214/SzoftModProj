@@ -5,8 +5,11 @@
 
 int main()
 {
+    #ifdef _WIN32
     system("chcp 65001");//ékezetek FIX windowson
     system("cls");
+    #endif
+
     std::string str;
     while(std::getline(std::cin, str))
     {
