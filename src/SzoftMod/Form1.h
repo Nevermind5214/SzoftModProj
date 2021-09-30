@@ -529,7 +529,26 @@ namespace CppCLRWinformsProjekt {
 
 			try {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Black;
-				this->labelRetVal->Text = toSystemString((std::to_string(calculate(data))));
+				std::string eredmeny = std::to_string(calculate(data));
+
+				//remove trailing zeroes
+				bool doit = true;
+				for (int i = eredmeny.size() - 1; i >= 0 && doit; i--)
+				{
+					if (eredmeny[i] != '0' && eredmeny[i] != '.') //megkeresem az első nemnulla és nem pont karaktert
+					{
+						doit = false;
+						std::string koztes;
+						for (int j = 0; j < i+1; j++)
+						{
+							koztes.push_back(eredmeny[j]);
+						}
+						eredmeny = koztes;
+					}
+					if (doit && i == 0) eredmeny = "0"; //mind nulla vagy pont karakter
+				}
+
+				this->labelRetVal->Text = toSystemString(eredmeny);
 			}
 			catch (char const* errorText) {
 				this->labelRetVal->ForeColor = System::Drawing::Color::Red;

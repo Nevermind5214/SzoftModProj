@@ -52,6 +52,7 @@ bool zarojelekJokE(std::vector<Token> inputTokenVect) {//DONE
 
 std::vector<Token> tokenise(std::vector<char> inputCharVect) { //DONE
 	std::vector<Token> tokenisedInput;
+	if (inputCharVect.size() == 0) tokenisedInput.push_back(Token('n', 0)); //üres input esetén 0
 	double retval = 0;
 	int dotCounter = 1;
 	bool beforeDot = true;
