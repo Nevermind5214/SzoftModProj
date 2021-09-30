@@ -1,7 +1,5 @@
 ﻿#pragma once
 #include <math.h>
-static std::string toStandardString(System::String^ myString);
-static String^ toSystemString(std::string myString);
 
 std::vector<char> muveletiJelek = { '+','-','*','/','(',')','.','^','!' };
 std::vector<std::string> fuggvenyWhitelist = { "sqrt", "sin", "cos", "tan" };
@@ -106,11 +104,7 @@ std::vector<Token> tokenise(std::vector<char> inputCharVect) { //DONE
 					}
 				}
 			}
-			if (!megvan)
-			{
-				std::string dotnetegyfos(1, inputCharVect[i]);
-				throw("Ismeretlen karakter: '" + toSystemString(dotnetegyfos) + "'");
-			}
+			if (!megvan) throw("Ismeretlen függvény!");
 		}
 
 		//elértünk a karakterek végére és az utsó jegy szám volt akkor bele kell tenni mert már nem lesz több a for-ban
